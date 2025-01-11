@@ -10,6 +10,7 @@ This is a **Task Management Application** that enables users to manage buckets a
 ## **Table of Contents**
 
 - [Features](#features)
+- [Demo](#demo)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
   - [Backend (Rails API)](#backend-rails-api)
@@ -31,6 +32,10 @@ This is a **Task Management Application** that enables users to manage buckets a
 - Add tasks to a bucket.
 - Update tasks within a bucket.
 - Delete tasks from a bucket.
+
+---
+## **Demo**
+[![Watch the video](https://img.youtube.com/vi/Vc-XexfzTBA/0.jpg)](https://youtu.be/Vc-XexfzTBA)
 
 ---
 
