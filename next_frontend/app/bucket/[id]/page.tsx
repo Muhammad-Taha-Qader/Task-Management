@@ -19,8 +19,7 @@ export default function BucketDetails({ params }: { params: Promise<{ id: string
       try {
         const resolvedParams = await params;
         setBucketId(Number(resolvedParams.id));
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (err) {
+      } catch {
         setError("Failed to resolve params. Please try again.");
       }
     };
@@ -35,8 +34,7 @@ export default function BucketDetails({ params }: { params: Promise<{ id: string
         try {
           const data = await fetchBucket(bucketId);
           setBucket(data);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-        } catch (err: any) {
+        } catch {
           setError("Failed to load bucket details. Please try again.");
         }
       }
@@ -51,8 +49,7 @@ export default function BucketDetails({ params }: { params: Promise<{ id: string
       const newTask = await createTask(bucket.id, data);
       setBucket({ ...bucket, tasks: [...bucket.tasks, newTask] });
       setIsCreatingTask(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-    } catch (err: any) {
+    } catch {
       setError("Failed to create task. Please try again.");
     }
   };
@@ -66,13 +63,10 @@ export default function BucketDetails({ params }: { params: Promise<{ id: string
       const updatedTask = await updateTask(bucket.id, taskId, data);
       setBucket({
         ...bucket,
-        tasks: bucket.tasks.map((task) =>
-          task.id === updatedTask.id ? updatedTask : task
-        ),
+        tasks: bucket.tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
       });
       setEditingTask(null);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-    } catch (err: any) {
+    } catch {
       setError("Failed to update task. Please try again.");
     }
   };
@@ -85,20 +79,26 @@ export default function BucketDetails({ params }: { params: Promise<{ id: string
         ...bucket,
         tasks: bucket.tasks.filter((task) => task.id !== taskId),
       });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-    } catch (err: any) {
+    } catch {
       setError("Failed to delete task. Please try again.");
     }
   };
 
-  if (!bucket) return <p>Loading...</p>;
+  if (!bucket) return <p className="text-gray-500 dark:text-gray-400">Loading...</p>;
 
   return (
     <div className="container mx-auto p-4">
-      {error && <p className="text-red-500">{error}</p>}
-      <h1 className="text-2xl font-bold">{bucket.name}</h1>
-      <p>{bucket.description}</p>
-      <p>Status: {bucket.status}</p>
+      {error && (
+        <div className="bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+      <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">{bucket.name}</h1>
+      <p className="text-gray-600 dark:text-gray-400">{bucket.description}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        <strong>Status:</strong> {bucket.status}
+      </p>
+
       {isCreatingTask && (
         <TaskForm
           onSubmit={handleCreateTask}
@@ -115,16 +115,18 @@ export default function BucketDetails({ params }: { params: Promise<{ id: string
       {!isCreatingTask && !editingTask && (
         <button
           onClick={() => setIsCreatingTask(true)}
-          className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+          className="mt-4 px-4 py-2 bg-green-500 dark:bg-green-600 text-white rounded hover:bg-green-600 dark:hover:bg-green-700 focus:ring focus:ring-green-200 dark:focus:ring-green-800"
         >
           Create Task
         </button>
       )}
-      <TaskList
-        tasks={bucket.tasks}
-        onDelete={handleDeleteTask}
-        onEdit={setEditingTask}
-      />
+      <div className="mt-8">
+        <TaskList
+          tasks={bucket.tasks}
+          onDelete={handleDeleteTask}
+          onEdit={setEditingTask}
+        />
+      </div>
     </div>
   );
 }

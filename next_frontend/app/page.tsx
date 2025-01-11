@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import BucketList from "../components/BucketList";
 import BucketForm from "../components/BucketForm";
+import ThemeToggle from "../components/ThemeToggle";
 import { fetchBuckets, createBucket, updateBucket, deleteBucket } from "../services/api";
 import { Bucket } from "../types";
 
@@ -60,35 +61,72 @@ export default function HomePage() {
     }
   };
 
+  const dismissError = () => setError(null);
+
   return (
     <div className="container mx-auto p-4">
-      {error && <p className="text-red-500">{error}</p>}
-      {isCreating && (
-        <BucketForm
-          onSubmit={handleCreate}
-          onCancel={() => setIsCreating(false)}
-        />
+      <header className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Task Management</h1>
+          <p className="text-gray-500 dark:text-gray-400">
+            Manage your buckets and tasks efficiently
+          </p>
+        </div>
+        <ThemeToggle />
+      </header>
+
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+          <span>{error}</span>
+          <button
+            className="absolute top-0 bottom-0 right-0 px-4 py-3"
+            onClick={dismissError}
+          >
+            <span className="text-red-500">&times;</span>
+          </button>
+        </div>
       )}
-      {editingBucket && (
-        <BucketForm
-          initialData={editingBucket}
-          onSubmit={(data) => handleUpdate(editingBucket.id, data)}
-          onCancel={() => setEditingBucket(null)}
-        />
-      )}
-      {!isCreating && !editingBucket && (
-        <button
-          onClick={() => setIsCreating(true)}
-          className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
-        >
-          Create Bucket
-        </button>
-      )}
-      <BucketList
-        buckets={buckets}
-        onDelete={handleDelete}
-        onEdit={setEditingBucket}
-      />
+
+      <div className="flex justify-center mb-4">
+        {!isCreating && !editingBucket && (
+          <button
+            onClick={() => setIsCreating(true)}
+            className="px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-600 transition"
+          >
+            + Create New Bucket
+          </button>
+        )}
+      </div>
+
+      <div>
+        {isCreating && (
+          <BucketForm
+            onSubmit={handleCreate}
+            onCancel={() => setIsCreating(false)}
+          />
+        )}
+        {editingBucket && (
+          <BucketForm
+            initialData={editingBucket}
+            onSubmit={(data) => handleUpdate(editingBucket.id, data)}
+            onCancel={() => setEditingBucket(null)}
+          />
+        )}
+      </div>
+
+      <div>
+        {buckets.length === 0 && !isCreating && !editingBucket ? (
+          <div className="text-center text-gray-500 mt-6 dark:text-gray-400">
+            <p>No buckets found. Start by creating a new bucket!</p>
+          </div>
+        ) : (
+          <BucketList
+            buckets={buckets}
+            onDelete={handleDelete}
+            onEdit={setEditingBucket}
+          />
+        )}
+      </div>
     </div>
   );
 }
