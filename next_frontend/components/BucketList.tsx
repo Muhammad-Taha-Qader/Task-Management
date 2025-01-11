@@ -17,7 +17,7 @@ const BucketList: React.FC<BucketListProps> = ({ buckets, onDelete, onEdit }) =>
         {buckets.map((bucket) => (
           <div
             key={bucket.id}
-            className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex flex-col justify-between h-full">
               <div>
@@ -30,7 +30,7 @@ const BucketList: React.FC<BucketListProps> = ({ buckets, onDelete, onEdit }) =>
               <div className="mt-6 flex justify-between items-center">
                 <Link href={`/bucket/${bucket.id}`}>
                   <button
-                    className="flex items-center px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-600 dark:hover:bg-blue-700 focus:ring focus:ring-blue-200 dark:focus:ring-blue-800 transition"
+                    className="flex items-center px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-600 dark:hover:bg-blue-700 focus:ring focus:ring-blue-200 dark:focus:ring-blue-800 transition"
                   >
                     <FaEye className="mr-2" />
                     View
@@ -38,14 +38,14 @@ const BucketList: React.FC<BucketListProps> = ({ buckets, onDelete, onEdit }) =>
                 </Link>
                 <button
                   onClick={() => onEdit(bucket)}
-                  className="flex items-center px-4 py-2 bg-yellow-500 dark:bg-yellow-600 text-white text-sm font-medium rounded hover:bg-yellow-600 dark:hover:bg-yellow-700 focus:ring focus:ring-yellow-200 dark:focus:ring-yellow-800 transition"
+                  className="flex items-center px-4 py-2 bg-yellow-500 dark:bg-yellow-600 text-white text-sm font-medium rounded-xl hover:bg-yellow-600 dark:hover:bg-yellow-700 focus:ring focus:ring-yellow-200 dark:focus:ring-yellow-800 transition"
                 >
                   <FaEdit className="mr-2" />
                   Edit
                 </button>
                 <button
                   onClick={() => onDelete(bucket.id)}
-                  className="flex items-center px-4 py-2 bg-red-500 dark:bg-red-600 text-white text-sm font-medium rounded hover:bg-red-600 dark:hover:bg-red-700 focus:ring focus:ring-red-200 dark:focus:ring-red-800 transition"
+                  className="flex items-center px-4 py-2 bg-red-500 dark:bg-red-600 text-white text-sm font-medium rounded-xl hover:bg-red-600 dark:hover:bg-red-700 focus:ring focus:ring-red-200 dark:focus:ring-red-800 transition"
                 >
                   <FaTrashAlt className="mr-2" />
                   Delete

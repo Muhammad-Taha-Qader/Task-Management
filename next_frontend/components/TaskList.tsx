@@ -32,14 +32,14 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete, onEdit }) => {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => onEdit(task)}
-                    className="flex items-center px-3 py-2 bg-yellow-500 dark:bg-yellow-600 text-white text-sm rounded hover:bg-yellow-600 dark:hover:bg-yellow-700 focus:ring focus:ring-yellow-200 dark:focus:ring-yellow-800 transition"
+                    className="flex items-center px-3 py-2 bg-yellow-500 dark:bg-yellow-600 text-white text-sm rounded-xl hover:bg-yellow-600 dark:hover:bg-yellow-700 focus:ring focus:ring-yellow-200 dark:focus:ring-yellow-800 transition"
                   >
                     <FaEdit className="mr-2" />
                     Edit
                   </button>
                   <button
                     onClick={() => onDelete(task.id)}
-                    className="flex items-center px-3 py-2 bg-red-500 dark:bg-red-600 text-white text-sm rounded hover:bg-red-600 dark:hover:bg-red-700 focus:ring focus:ring-red-200 dark:focus:ring-red-800 transition"
+                    className="flex items-center px-3 py-2 bg-red-500 dark:bg-red-600 text-white text-sm rounded-xl hover:bg-red-600 dark:hover:bg-red-700 focus:ring focus:ring-red-200 dark:focus:ring-red-800 transition"
                   >
                     <FaTrashAlt className="mr-2" />
                     Delete

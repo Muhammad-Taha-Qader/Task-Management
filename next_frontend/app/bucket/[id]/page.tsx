@@ -87,45 +87,66 @@ export default function BucketDetails({ params }: { params: Promise<{ id: string
   if (!bucket) return <p className="text-gray-500 dark:text-gray-400">Loading...</p>;
 
   return (
-    <div className="container mx-auto p-4">
+    <div>
+      {/* Stylish Header */}
+      <header
+        className="relative bg-cover bg-center text-white p-8 rounded-b-3xl shadow-md"
+        style={{
+          backgroundImage: `url('/bg.jpg')`, // Replace with the actual file in public folder
+        }}
+      >
+        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center">
+          <div>
+            <h1 className="text-4xl font-bold">{bucket.name}</h1>
+            <p className="text-lg mt-2">{bucket.description}</p>
+          </div>
+          <div className="mt-4 sm:mt-0">
+            <p className="text-sm">
+              <strong>Status:</strong> {bucket.status}
+            </p>
+          </div>
+        </div>
+      </header>
+
+      {/* Error Handling */}
       {error && (
-        <div className="bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 px-4 py-3 rounded mb-4">
+        <div className="bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 px-4 py-3 rounded mb-4 mt-4">
           {error}
         </div>
       )}
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">{bucket.name}</h1>
-      <p className="text-gray-600 dark:text-gray-400">{bucket.description}</p>
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        <strong>Status:</strong> {bucket.status}
-      </p>
 
-      {isCreatingTask && (
-        <TaskForm
-          onSubmit={handleCreateTask}
-          onCancel={() => setIsCreatingTask(false)}
-        />
-      )}
-      {editingTask && (
-        <TaskForm
-          initialData={editingTask}
-          onSubmit={(data) => handleUpdateTask(editingTask.id, data)}
-          onCancel={() => setEditingTask(null)}
-        />
-      )}
-      {!isCreatingTask && !editingTask && (
-        <button
-          onClick={() => setIsCreatingTask(true)}
-          className="mt-4 px-4 py-2 bg-green-500 dark:bg-green-600 text-white rounded hover:bg-green-600 dark:hover:bg-green-700 focus:ring focus:ring-green-200 dark:focus:ring-green-800"
-        >
-          Create Task
-        </button>
-      )}
-      <div className="mt-8">
-        <TaskList
-          tasks={bucket.tasks}
-          onDelete={handleDeleteTask}
-          onEdit={setEditingTask}
-        />
+      {/* Task Management Section */}
+      <div className="container mx-auto p-4">
+        {isCreatingTask && (
+          <TaskForm
+            onSubmit={handleCreateTask}
+            onCancel={() => setIsCreatingTask(false)}
+          />
+        )}
+        {editingTask && (
+          <TaskForm
+            initialData={editingTask}
+            onSubmit={(data) => handleUpdateTask(editingTask.id, data)}
+            onCancel={() => setEditingTask(null)}
+          />
+        )}
+        <div className="flex justify-center my-4">
+        {!isCreatingTask && !editingTask && (
+          <button
+            onClick={() => setIsCreatingTask(true)}
+            className="mt-4 px-4 py-2 bg-green-500 dark:bg-green-600 text-white rounded-xl hover:bg-green-600 dark:hover:bg-green-700 focus:ring focus:ring-green-200 dark:focus:ring-green-800"
+          >
+            Create Task
+          </button>
+        )}
+        </div>
+        <div className="mt-8">
+          <TaskList
+            tasks={bucket.tasks}
+            onDelete={handleDeleteTask}
+            onEdit={setEditingTask}
+          />
+        </div>
       </div>
     </div>
   );
